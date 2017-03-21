@@ -1,0 +1,91 @@
+body {
+    background-color: #444444 ;
+}
+
+.brand-name {
+    width: 341px;
+    margin: 30px auto 15px auto;
+    font-family: Algerian;
+    color: #c5c5d0;
+    font-size: 50px;
+}
+
+.outer-container {
+    width: 90%;
+    min-height: 600px;
+    margin: 15px auto 50px auto;
+    background-color: #29292A;
+}
+
+.zoom-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.zoom-button {
+    background-color: #707073;
+    font-family: Bookman Old Style;
+    width:35px;
+    margin-right: 12px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.zoom-month {
+    color: #FDFDFE;
+}
+
+.stock-graph-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    direction: rtl;
+    height: 300px;
+    margin-top: 30px;
+}
+
+.stock-graph {
+    width: 270%;
+    height: 300px;
+}
+
+.add-stock {
+    margin-top : 30px;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 24px;
+}
+
+.stock-panel-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.stock-panel {
+    width: 250px;
+    height: 50px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    background-color: aliceblue;
+}
+
+.stock-name{
+    margin: 0 auto;
+    font-family: Bookman Old Style;
+    font-size : 30px;
+    color : #231F20;
+}
+
+.close-icon {
+    display: none;
+}
+
+.stock-panel:hover  .close-icon{
+    display: block;
+    padding-right: 12px;   
+    cursor: pointer;
+}

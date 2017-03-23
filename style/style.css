@@ -50,12 +50,35 @@ body {
     height: 300px;
 }
 
+.add-stock-container {
+    text-align: center;
+}
+
 .add-stock {
     margin-top : 30px;
     width: 60%;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 24px;
+}
+
+.add-stock .form-control:focus {
+    border: 1px solid #FFF;
+}
+
+.add-button {
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #AAA;
+    border-color: #AAA;
+}
+
+.errorMessage {
+    display: block;
+    color: red;
+    margin-top:-20px;
 }
 
 .stock-panel-group {

@@ -1,0 +1,1 @@
+export const STOCK_WATCH_SERVER_URI = "https://stock-watch-koushikkumarv.c9users.io";

@@ -32,6 +32,10 @@ body {
     cursor: pointer;
 }
 
+.zoom-button-hovered {
+    background-color: #4f4f4f;
+}
+
 .zoom-month {
     color: #FDFDFE;
 }
@@ -45,8 +49,6 @@ body {
 }
 
 .stock-graph {
-    /*width: 270%;*/
-    width:800px;
     height: 300px;
 }
 

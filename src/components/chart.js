@@ -19,8 +19,8 @@ class Chart extends Component {
 
     renderChart() {
         if(this.props.stocks.length) {
-            const margin = {left:50,right:50,top:50,bottom:50};
-            const outerWidth = 1600;
+            const margin = {left:50,right:0,top:50,bottom:50};
+            const outerWidth = (window.innerWidth * 0.7515) * this.props.zoomLevel;
             const outerHeight = 300;
             const innerWidth = outerWidth-margin.right-margin.left;
             const innerHeight = outerHeight-margin.bottom-margin.top;
@@ -113,7 +113,8 @@ class Chart extends Component {
 function mapStateToProps(state) {
     return {
         stockData: state.stocksInfo.data,
-        stocks: state.stocksInfo.stocks
+        stocks: state.stocksInfo.stocks,
+        zoomLevel: state.zoom.zoomLevel
     }
 }
 

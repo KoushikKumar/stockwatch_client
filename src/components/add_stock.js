@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-import { addStock } from '../actions';
 
 class AddStock extends Component {
 
     constructor(props) {
         super(props);
         this.state = {"stockName":"", "errorMessage":""}
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        this.props.socket.on('errorMessage', message => {
+            this.setState({errorMessage:prevState.stockName.toUpperCase() + " not a valid stock code"})
+        });
     }
 
     addStock() {
@@ -17,7 +22,6 @@ class AddStock extends Component {
                 this.setState({errorMessage: stockName+" is already present"});
             } else {
                 this.props.socket.emit('addStock', stockName);
-                this.props.addStock(stockName);
                 this.setState({stockName:""}); 
             }
         }
@@ -70,4 +74,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addStock})(AddStock);
+export default connect(mapStateToProps)(AddStock);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
-import { addStock, flushAvailableStocks, shareSocket, removeStock } from '../actions';
+import { addStock, flushAvailableStocks, shareSocket, removeStock, getChartData } from '../actions';
 import { STOCK_WATCH_SERVER_URI } from '../actions/uris';
 
 class Socket extends Component {
@@ -12,12 +12,14 @@ class Socket extends Component {
         this.props.shareSocket(this.socket);
         this.socket.on('newlyReceivedStock', stock => {
             this.props.addStock(stock.stockName);
+            this.props.getChartData();
         });
         this.socket.on('availableStocks', stocks => {
             this.props.flushAvailableStocks(stocks.availableStocks);
         });
         this.socket.on('newlyRemovedStock', stock => {
             this.props.removeStock(stock.stockName);
+            this.props.getChartData();
         });
     }
     
@@ -26,4 +28,4 @@ class Socket extends Component {
     }
 }
 
-export default connect(null, { addStock, flushAvailableStocks, shareSocket, removeStock }) (Socket);
+export default connect(null, { addStock, flushAvailableStocks, shareSocket, removeStock, getChartData }) (Socket);

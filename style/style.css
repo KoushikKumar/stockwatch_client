@@ -12,7 +12,6 @@ body {
 
 .outer-container {
     width: 90%;
-    min-height: 600px;
     margin: 15px auto 50px auto;
     background-color: #29292A;
 }
@@ -46,8 +45,25 @@ body {
 }
 
 .stock-graph {
-    width: 270%;
+    /*width: 270%;*/
+    width:800px;
     height: 300px;
+}
+
+text {
+    direction: ltr;
+    fill:black;
+}
+
+.label {
+    fill:#707073;
+    font-family: Bookman Old Style;
+}
+
+path{
+  fill:none;
+  stroke:white;
+  stroke-width:1px;
 }
 
 .add-stock-container {

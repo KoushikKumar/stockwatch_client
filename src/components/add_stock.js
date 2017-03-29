@@ -55,7 +55,7 @@ class AddStock extends Component {
                         value={this.state.stockName} 
                         type="text" 
                         className="form-control" 
-                        placeholder="Add Stock Code" 
+                        placeholder="Add Stock Code (Syncs in real time across clients)" 
                         aria-describedby="basic-addon2" />
                 <span onClick={()=>this.addStock()} 
                         className="add-button input-group-addon" 

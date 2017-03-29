@@ -3,9 +3,13 @@ import * as d3 from 'd3';
 import ReactFauxDOM from 'react-faux-dom';
 import { connect } from 'react-redux';
 
-import { getChartData } from '../actions';
+import { getChartData, renderHoveredData } from '../actions';
+import { HOVERED_DATA } from '../actions/types';
 
-let stockGraph;
+const colorsArray = ["1676b6", "adc6ea", "ff7f00", "ffbb72", "24a122", 
+                "96e086", "d8241f", "ff9794", "9564bf", "c5afd6",
+                "8d564a", "c59c93", "e574c3", "f9b5d2", "7f7f7f",
+                "c7c7c7", "bcbe00", "dbdc88", "00bed0", "9cdae6"];
 class Chart extends Component {
 
     constructor(props) {
@@ -18,6 +22,7 @@ class Chart extends Component {
     }
 
     renderChart() {
+        
         if(this.props.stocks.length) {
             const margin = {left:50,right:0,top:50,bottom:50};
             const outerWidth = (window.innerWidth * 0.7515) * this.props.zoomLevel;
@@ -34,8 +39,10 @@ class Chart extends Component {
             const stocks = this.props.stocks;
             const stockData = this.props.stockData;
 
-            stockGraph = ReactFauxDOM.createElement('div');
+            let stockGraph = ReactFauxDOM.createElement('div');
             stockGraph.setAttribute("class", "stock-graph");
+
+            let hoveredDataDiv = d3.select('.stock-graph-container').append('div').attr("class", "hovered-data");
 
             let svg = d3.select(stockGraph).append('svg')
                         .attr('width',outerWidth)
@@ -90,6 +97,75 @@ class Chart extends Component {
             }));
             xAxisG.call(xAxis);
             yAxisG.call(yAxis);
+
+            let rectData = [];
+            let xScaleDomain = xScale.domain();
+            let noOfDays = (xScaleDomain[1] - xScaleDomain[0]) / (1000 * 60 * 60 * 24);
+
+            for (let i = 0; i <= noOfDays; i++) {
+                rectData.push(i);
+            }
+
+            let bar_width = innerWidth / rectData.length;
+            var bars = g.selectAll('rect').data(rectData);
+            bars.enter().append('rect');
+            var allBars = g.selectAll('rect');
+            allBars.attr("x", function(d) {
+                return d * bar_width
+            })
+            .attr("y", function(d) {
+                return 0
+            })
+            .attr("width", bar_width)
+            .attr("height", function(d) {
+                return innerHeight - 0
+            })
+            .attr("class", "bars");
+            bars.exit().remove();
+
+            allBars.on('mouseover', function(d) {
+                function getDate(d) {
+                    let date = new Date();
+                    date.setDate(date.getDate() - (365 - d));
+                    return date.getFullYear() + "-" + (appendZero(Number(date.getMonth()) + 1)) + "-" + appendZero(date.getDate());
+                }
+
+                function appendZero(num) {
+                    if (num < 10) {
+                        return "0" + num;
+                    }
+                    return num;
+                }
+
+                function getClosingPrice(date, data) {
+                    let result = "";
+                    if(data && data.length){
+                        data.every((dataPoint) => {
+                            if (dataPoint["date"].startsWith(date)) {
+                                result = dataPoint["close"];
+                                return false;
+                            }
+                            return true;
+                        });
+                    }
+                    if(!result) {
+                        return "Sat/Sun/NA";
+                    }
+                    return result.toFixed(2);
+                }
+
+                let hoveredDate = getDate(d);
+                let hoveredData = "";
+                stocks.forEach(function(stock, index) {
+                    hoveredData = hoveredData +" "+ "<div class='hovered-span' style='background-color:"+"#"+colorsArray[index]+"'></div>" +" "+ stock + " " + getClosingPrice(hoveredDate, stockData[stock]);
+                });
+                hoveredDataDiv.html(hoveredDate + "   " + hoveredData);
+            });
+
+            allBars.on('mouseout', function(d) {
+                hoveredDataDiv.html('');
+            });
+
             stocks.forEach(function(stock, index){
                 if(stockData[stock]) {
                     let path = g.append('path');

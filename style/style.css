@@ -48,6 +48,20 @@ body {
     margin-top: 30px;
 }
 
+.hovered-data{
+    color: white;
+    text-align: center;  
+    margin-top: -300px;
+    direction: ltr;
+}
+
+.hovered-span {
+    width: 10px;
+    height:10px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
 .stock-graph {
     height: 300px;
 }
@@ -129,4 +143,8 @@ path{
     display: block;
     padding-right: 12px;   
     cursor: pointer;
+}
+
+.bars {
+    opacity: 0;
 }
